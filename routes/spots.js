@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 // creates and saves the new spot
-router.post('/new', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const user = req.user._id; // to make sure that is is the admin
   const spotName = req.body.name;
   const district = req.body.district;
