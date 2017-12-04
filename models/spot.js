@@ -13,7 +13,7 @@ const spotSchema = new Schema({
   images: Array,
   description: String,
   links: Array, // 1. web, 2. facebook, 3. google maps, 4. instagram
-  location: Array // object containing lat, long like mongoose likes it? or just array of lat, lng?
+  location: Object // object containing lat, long like mongoose likes it? or just array of lat, lng?
 });
 
 const Spot = mongoose.model('Spot', spotSchema);

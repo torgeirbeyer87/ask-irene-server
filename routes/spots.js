@@ -14,21 +14,41 @@ router.get('/', function (req, res, next) {
 });
 
 // creates and saves the new spot
-// router.post('/new', (req, res, next) => {
-//   const hacker = req.user._id;
-//   const posttext = req.body.text;
-//   const newPost = new Post({
-//     text: posttext,
-//     owner: hacker,
-//     score: 0
-//   });
+router.post('/new', (req, res, next) => {
+  const user = req.user._id; // to make sure that is is the admin
+  const spotName = req.body.name;
+  const district = req.body.district;
+  const category = req.body.category;
+  const situation = req.body.situation;
+  const price = req.body.price;
+  const vibe = req.body.vibe;
+  const tags = req.body.tags;
+  const images = req.body.images;
+  const description = req.body.description;
+  const links = req.body.links;
+  const location = req.body.location;
 
-//   newPost.save((err) => {
-//     if (err) {
-//       next(err);
-//     }
-//     res.redirect('/feed');
-//   });
-// });
+  const newSpot = new Spot({
+    // owner: user,
+    name: spotName,
+    district: district,
+    category: category,
+    situation: situation,
+    price: price,
+    vibe: vibe,
+    tags: tags,
+    images: images,
+    description: description,
+    links: links,
+    location: location
+  });
+
+  newSpot.save((err) => {
+    if (err) {
+      next(err);
+    }
+    res.json({message: 'Saved'});
+  });
+});
 
 module.exports = router;
