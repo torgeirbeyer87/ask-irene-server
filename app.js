@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 
 // OWN REQUIREMENTS
 const index = require('./routes/index');
-require('dotenv').config();
+const dotenv = require('dotenv');
 
 // APP
 const app = express();
