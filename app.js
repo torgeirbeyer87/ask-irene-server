@@ -1,6 +1,6 @@
 'use strict';
 
-// REAUIRE NODE MODULES
+// REQUIRE NODE MODULES
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
@@ -10,13 +10,18 @@ const mongoose = require('mongoose');
 
 // OWN REQUIREMENTS
 const index = require('./routes/index');
+require('dotenv').config();
 
 // APP
 const app = express();
 
+// --SETUP THE APP-- //
+
+dotenv.config();
+
 // CONNECT TO MONGODB
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/ask-irene', {
+mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
