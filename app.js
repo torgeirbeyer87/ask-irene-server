@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 
 // OWN REQUIREMENTS
 const index = require('./routes/index');
+const spots = require('./routes/spots');
+
 const dotenv = require('dotenv');
 
 // APP
@@ -36,6 +38,7 @@ app.use(cors());
 
 // ROUTES
 app.use('/', index);
+app.use('/spots', spots);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -17,7 +17,10 @@ const spots = [
     'images': ['Bb38853Fz0_', 'BcHs2AXFXsN', 'BcLKgNPlIqb'],
     'description': 'Part-restaurant, part-cocktail bar. Servicio Continuo is the place to go if you want to run into local celebrities or everything else is closed.',
     'links': ['http://serviciocontinuo.com', 'https://www.facebook.com/CocktailBarDiagonal', 'https://goo.gl/maps/nsnxhbYgmbR2', 'https://www.instagram.com/serviciocontinuo/'],
-    'location': [41.397852, 2.164561]
+    'location': {
+      'type': 'Point',
+      'coordinates': [41.397852, 2.164561]
+    }
   },
   {
     'name': 'Chen Ji',
@@ -30,7 +33,10 @@ const spots = [
     'images': ['Bb38853Fz0_', 'BcHs2AXFXsN', 'BcLKgNPlIqb'],
     'description': 'Part-restaurant, part-cocktail bar. Servicio Continuo is the place to go if you want to run into local celebrities or everything else is closed.',
     'links': ['http://serviciocontinuo.com', 'https://www.facebook.com/CocktailBarDiagonal', 'https://goo.gl/maps/eZKeNh7hrUR2', 'https://www.instagram.com/serviciocontinuo/'],
-    'location': [null, null]
+    'location': {
+      'type': 'Point',
+      'coordinates': [null, null]
+    }
   },
   {
     'name': 'Koku Kitchen',
@@ -43,7 +49,10 @@ const spots = [
     'images': ['Bb38853Fz0_', 'BcHs2AXFXsN', 'BcLKgNPlIqb'],
     'description': 'Part-restaurant, part-cocktail bar. Servicio Continuo is the place to go if you want to run into local celebrities or everything else is closed.',
     'links': ['http://serviciocontinuo.com', 'https://www.facebook.com/CocktailBarDiagonal', 'https://goo.gl/maps/5dpP9udNpXC2', 'https://www.instagram.com/serviciocontinuo/'],
-    'location': [null, null]
+    'location': {
+      'type': 'Point',
+      'coordinates': [null, null]
+    }
   }];
 
 Spot.create(spots, (err, docs) => {
