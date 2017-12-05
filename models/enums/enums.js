@@ -1,5 +1,5 @@
 
-const disctrict = ['Barceloneta',
+const district = ['Barceloneta',
   'Beyond Barcelona',
   'Born',
   'Eixample Dreta',
@@ -97,7 +97,7 @@ const vibe = [
 ];
 
 module.exports = {
-  disctrict,
+  district,
   situation,
   price,
   categories,

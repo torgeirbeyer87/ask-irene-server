@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const selectorSchema = new Schema({
-  disctrict: Array,
+  district: Array,
   situation: Array,
   price: Array,
   categories: Array,
