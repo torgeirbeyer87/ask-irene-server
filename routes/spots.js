@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Spot = require('../models/spot').Spot;
+const Selector = require('../models/selector').Selector;
 
 // get all the spots
 router.get('/', function (req, res, next) {
@@ -48,6 +49,16 @@ router.post('/', (req, res, next) => {
       next(err);
     }
     res.json({message: 'Saved'});
+  });
+});
+
+// gets the selector-object
+router.get('/selectors', function (req, res, next) {
+  Selector.find({}, (err, selectors) => {
+    if (err) {
+      return next(err); // to not show the error in the frontend
+    }
+    return res.json(selectors);
   });
 });
 
