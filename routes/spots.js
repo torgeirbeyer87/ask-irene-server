@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Spot = require('../models/spot').Spot;
-const Selector = require('../models/selector').Selector;
+const enums = require('../models/enums/enums');
 
 // get all the spots
 router.get('/', function (req, res, next) {
@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
   // const user = req.user._id; // to make sure that is is the admin
   const spotName = req.body.name;
   const district = req.body.district;
-  const category = req.body.category;
+  const category = req.body.categories;
   const situation = req.body.situation;
   const price = req.body.price;
   const vibe = req.body.vibe;
@@ -55,12 +55,7 @@ router.post('/', (req, res, next) => {
 
 // gets the selector-object
 router.get('/selectors', function (req, res, next) {
-  Selector.find({}, (err, selectors) => {
-    if (err) {
-      return next(err); // to not show the error in the frontend
-    }
-    return res.json(selectors);
-  });
+  res.json(enums);
 });
 
 module.exports = router;
