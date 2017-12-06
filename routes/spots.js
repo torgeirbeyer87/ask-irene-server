@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
   // const user = req.user._id; // to make sure that is is the admin
   const spotName = req.body.name;
   const district = req.body.district;
-  const category = req.body.categories;
+  const categories = req.body.categories;
   const situation = req.body.situation;
   const price = req.body.price;
   const vibe = req.body.vibe;
@@ -34,7 +34,7 @@ router.post('/', (req, res, next) => {
     // owner: user,
     name: spotName,
     district: district,
-    category: category,
+    categories: categories,
     situation: situation,
     price: price,
     vibe: vibe,

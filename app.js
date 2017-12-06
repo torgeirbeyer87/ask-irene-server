@@ -6,9 +6,12 @@ const cors = require('cors');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 
 // OWN REQUIREMENTS
+const configurePassport = require('./helpers/passport');
 const index = require('./routes/index');
 const spots = require('./routes/spots');
 
@@ -16,8 +19,6 @@ const dotenv = require('dotenv');
 
 // APP
 const app = express();
-
-// --SETUP THE APP-- //
 
 dotenv.config();
 
@@ -29,12 +30,33 @@ mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
 });
 
+// -- SETUP APP -- //
+// CORS
+app.use(cors());
+// SESSION
+app.use(session({
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  }),
+  secret: 'ask-irene',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 10000
+  }
+}));
+
+// PASSPORT
+const passport = configurePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 // MIDDLEWARE
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
 
 // ROUTES
 app.use('/', index);

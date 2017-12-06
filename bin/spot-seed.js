@@ -9,7 +9,7 @@ const spots = [
   {
     'name': 'Servicio Continuo',
     'district': 'Eixample Dreta',
-    'category': ['Cocktails', 'American', 'Bar'],
+    'categories': ['Cocktails', 'American', 'Bar'],
     'situation': 'Date',
     'price': 'Affordable',
     'vibe': 'Hipster Alert',
@@ -25,7 +25,7 @@ const spots = [
   {
     'name': 'Chen Ji',
     'district': 'Barceloneta',
-    'category': ['Cocktails', 'Brasa', 'Breakfast & Brunch'],
+    'categories': ['Cocktails', 'Brasa', 'Breakfast & Brunch'],
     'situation': 'Date',
     'price': 'Budget-friendly',
     'vibe': 'Hipster Alert',
@@ -41,7 +41,7 @@ const spots = [
   {
     'name': 'Koku Kitchen',
     'district': 'Poblenou',
-    'category': ['Cocktails', 'Chinese', 'Healthy'],
+    'categories': ['Cocktails', 'Chinese', 'Healthy'],
     'situation': 'Date',
     'price': 'Worth it',
     'vibe': 'Hipster Alert',
