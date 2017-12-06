@@ -6,13 +6,13 @@ const spotSchema = new Schema({
   name: String,
   district: String,
   category: Array,
-  situation: String,
+  situation: Array,
   price: String,
-  vibe: String,
+  vibe: Array,
   tags: Array,
   images: Array,
   description: String,
-  links: Array, // 1. web, 2. facebook, 3. google maps, 4. instagram
+  links: Object, // 1. web, 2. facebook, 3. google maps, 4. instagram
   location: Object // object containing lat, long like mongoose likes it? or just array of lat, lng?
 });
 
