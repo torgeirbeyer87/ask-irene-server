@@ -32,7 +32,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // -- SETUP APP -- //
 // CORS
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: [process.env.CLIENT_URL]
+}));
 // SESSION
 app.use(session({
   store: new MongoStore({
