@@ -5,7 +5,7 @@ const spotSchema = new Schema({
   id: String,
   name: String,
   district: String,
-  category: Array,
+  categories: Array,
   situation: Array,
   price: String,
   vibe: Array,
