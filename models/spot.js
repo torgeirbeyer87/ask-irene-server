@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 const spotSchema = new Schema({
   id: String,
   name: String,
-  district: String,
+  district: Array,
   categories: Array,
   situation: Array,
-  price: String,
+  price: Array,
   vibe: Array,
   tags: Array,
   images: Array,
