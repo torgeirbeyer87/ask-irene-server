@@ -35,7 +35,6 @@ const price = [
 ];
 
 const categories = [
-  'Cocktails',
   'American',
   'Asian Fusion',
   'Avant-garde Cuisine',
@@ -48,6 +47,7 @@ const categories = [
   'Caribbean',
   'Chinese',
   'Craft beer',
+  'Cocktails',
   'French',
   'Healthy',
   'Ice cream',
@@ -60,6 +60,7 @@ const categories = [
   'Ramen',
   'Seafood',
   'South American',
+  'Spanish',
   'Speciality Coffee',
   'Sushi',
   'Tapas',

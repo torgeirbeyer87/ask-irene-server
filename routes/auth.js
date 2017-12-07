@@ -84,9 +84,9 @@ router.post('/logout', (req, res) => {
   return response.ok(req, res);
 });
 
-router.get('/', (req, res) => {
-  res.json({message: 'auth route working'});
-});
+// router.get('/', (req, res) => {
+//   res.json({message: 'auth route working'});
+// });
 
 router.get('/me', (req, res) => {
   if (req.user) {
