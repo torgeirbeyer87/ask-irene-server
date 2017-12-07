@@ -12,8 +12,10 @@ const MongoStore = require('connect-mongo')(session);
 
 // OWN REQUIREMENTS
 const configurePassport = require('./helpers/passport');
+const response = require('./helpers/response');
 const index = require('./routes/index');
 const spots = require('./routes/spots');
+const auth = require('./routes/auth');
 
 const dotenv = require('dotenv');
 
@@ -64,25 +66,22 @@ app.use(cookieParser());
 // ROUTES
 app.use('/', index);
 app.use('/spots', spots);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  const err = new Error('Not Found');
-  res.status(err.status || 404);
-  console.log(err, req.path, req.method);
-  res.json({error: 'not found'});
-  // next(err);
+  response.notFound(req, res);
 });
 
-// error handler
+// NOTE: requires a views/error.ejs template
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // always log the error
+  console.error('ERROR', req.method, req.path, err);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.json({error: 'unexpexted error'});
+  // only send if the error ocurred before sending the response
+  if (!res.headersSent) {
+    response.unexpectedError(req, res, err);
+  }
 });
 
 module.exports = app;
