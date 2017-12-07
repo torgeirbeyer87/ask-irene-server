@@ -8,7 +8,7 @@ const User = require('../models/user').User;
 
 router.post('/login', (req, res, next) => {
   if (req.user) {
-    return response.forbidden();
+    return response.forbidden(req, res);
   }
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -28,7 +28,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
   if (req.user) {
-    return response.forbidden();
+    return response.forbidden(req, res);
   }
   const {
     username,
@@ -84,15 +84,20 @@ router.post('/logout', (req, res) => {
   return response.ok(req, res);
 });
 
-// router.get('/', (req, res) => {
-//   res.json({message: 'auth route working'});
+// router.get('/', function (req, res, next) {
+//   User.find({}, (err, users) => {
+//     if (err) {
+//       return next(err); // to not show the error in the frontend
+//     }
+//     return res.json(users);
+//   });
 // });
 
 router.get('/me', (req, res) => {
+  console.log('Auth Route working');
   if (req.user) {
     return response.data(req, res, req.user.asData());
   }
-
   return response.notFound(req, res);
 });
 

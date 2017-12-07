@@ -27,7 +27,7 @@ const response = {
   },
 
   unexpectedError: (req, res, err) => {
-    console.log(req.method, req.path, err);
+    console.log('What is going on? ' + req.method, req.path, err);
     res.status(500).json({
       error: 'Unexpected error'
     });
