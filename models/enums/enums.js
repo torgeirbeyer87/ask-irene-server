@@ -84,7 +84,7 @@ const tags = [
   'Good for groups',
   'Insta-worthy',
   'Interior Porn',
-  'Kid Friendly',
+  'Kid-friendly',
   'Late Night Eats',
   'Light Bites',
   'Lunch Menu',
