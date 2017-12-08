@@ -14,6 +14,31 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.post('/filter', (req, res, next) => {
+  console.log('hello from the filter-backend: ' + req.body);
+
+  const filter = req.body;
+  let query = {$and: []};
+
+  for (let key in filter) {
+    let condition = {$or: []};
+    filter[key].forEach((value) => {
+      condition.$or.push({[key]: value});
+    });
+    if (condition.$or.length !== 0) {
+      query.$and.push(condition);
+    }
+  }
+
+  Spot.find(query, (err, spots) => {
+    if (err) {
+      return next(err);
+    }
+    console.log('hello - here is the filtered spots: ' + spots);
+    return res.json(spots);
+  });
+});
+
 router.post('/:spotId', (req, res, next) => {
   Spot.findByIdAndRemove(req.params.spotId, (err, spot) => {
     if (err) {
@@ -22,9 +47,10 @@ router.post('/:spotId', (req, res, next) => {
     return res.json({message: 'spot deleted'});
   });
 });
+
 // creates and saves the new spot
 router.post('/', (req, res, next) => {
-  console.log('hello from the backend');
+  console.log('hello from the backend!');
   // const user = req.user._id; // to make sure that is is the admin
   const spotName = req.body.name;
   const district = req.body.district;
@@ -60,12 +86,6 @@ router.post('/', (req, res, next) => {
     res.json({message: 'Saved'});
   });
 });
-
-// Deletes one spot from the spot list
-
-// router.delete('/', (req, res) => {
-//   console.log(req, res);
-// });
 
 // gets the selector-object
 router.get('/selectors', function (req, res, next) {
