@@ -14,6 +14,14 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.post('/:spotId', (req, res, next) => {
+  Spot.findByIdAndRemove(req.params.spotId, (err, spot) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json({message: 'spot deleted'});
+  });
+});
 // creates and saves the new spot
 router.post('/', (req, res, next) => {
   console.log('hello from the backend');
@@ -52,6 +60,12 @@ router.post('/', (req, res, next) => {
     res.json({message: 'Saved'});
   });
 });
+
+// Deletes one spot from the spot list
+
+// router.delete('/', (req, res) => {
+//   console.log(req, res);
+// });
 
 // gets the selector-object
 router.get('/selectors', function (req, res, next) {
