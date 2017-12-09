@@ -45,8 +45,6 @@ router.get('/', function (req, res, next) {
 
 // function to filter the spots
 router.post('/filter', (req, res, next) => {
-  console.log('hello from the filter-backend: ' + req.body);
-
   const filter = req.body;
   let query = {$and: []};
 
@@ -64,20 +62,30 @@ router.post('/filter', (req, res, next) => {
 
   if (filterEmpty === false) {
     for (let key in filter) {
-      let condition = {$or: []};
+      let andCondition = {$and: []};
+      let orCondition = {$or: []};
+      // iterate over the keys of filter, and push key: value pairs into the corresponding array of subQuerys
       filter[key].forEach((value) => {
-        condition.$or.push({[key]: value});
+        if (key.toString() === 'district' || key.toString() === 'price') {
+          orCondition.$or.push({[key]: value});
+        } else {
+          andCondition.$and.push({[key]: value});
+        }
+        // checks if conditionarrays are NOT empty and pushes them to query
+        if (andCondition.$and.length !== 0) {
+          query.$and.push(andCondition);
+        } else if (orCondition.$or.length !== 0) {
+          query.$and.push(orCondition);
+        } else {
+          query.$and.push(orCondition, andCondition);
+        }
       });
-      if (condition.$or.length !== 0) {
-        query.$and.push(condition);
-      }
-    }
+    };
 
     Spot.find(query, (err, spots) => {
       if (err) {
         return next(err);
       }
-      console.log('hello - here is the filtered spots: ' + spots);
       return res.json(spots);
     });
   } else {
