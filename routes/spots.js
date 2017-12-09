@@ -50,23 +50,44 @@ router.post('/filter', (req, res, next) => {
   const filter = req.body;
   let query = {$and: []};
 
-  for (let key in filter) {
-    let condition = {$or: []};
-    filter[key].forEach((value) => {
-      condition.$or.push({[key]: value});
-    });
-    if (condition.$or.length !== 0) {
-      query.$and.push(condition);
+  // validate filter-request (can not be empty --> mongoose error)
+  let filterEmpty = true;
+  const values = Object.values(filter);
+  for (let ix = 0; ix < values.length; ix++) {
+    if (values[ix].length !== 0) {
+      filterEmpty = false; // can not use an early return --> stops the whole process
+      break;
+    } else {
+      filterEmpty = true;
     }
   }
 
-  Spot.find(query, (err, spots) => {
-    if (err) {
-      return next(err);
+  if (filterEmpty === false) {
+    for (let key in filter) {
+      let condition = {$or: []};
+      filter[key].forEach((value) => {
+        condition.$or.push({[key]: value});
+      });
+      if (condition.$or.length !== 0) {
+        query.$and.push(condition);
+      }
     }
-    console.log('hello - here is the filtered spots: ' + spots);
-    return res.json(spots);
-  });
+
+    Spot.find(query, (err, spots) => {
+      if (err) {
+        return next(err);
+      }
+      console.log('hello - here is the filtered spots: ' + spots);
+      return res.json(spots);
+    });
+  } else {
+    Spot.find({}, (err, spots) => {
+      if (err) {
+        return next(err); // to not show the error in the frontend
+      }
+      return res.json(spots);
+    });
+  }
 });
 
 // delete one spot
