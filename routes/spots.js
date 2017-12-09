@@ -26,6 +26,7 @@ router.post('/filter', (req, res, next) => {
   for (let ix = 0; ix < values.length; ix++) {
     if (values[ix].length !== 0) {
       filterEmpty = false; // can not use an early return --> stops the whole process
+      break;
     } else {
       filterEmpty = true;
     }
