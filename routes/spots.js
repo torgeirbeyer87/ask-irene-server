@@ -14,6 +14,36 @@ router.get('/', function (req, res, next) {
   });
 });
 
+// get one spot
+// router.get('/:spotId', (req, res, next) => {
+//   Spot.findById(req.params.spotId, (err, spot) => {
+//     if (err) {
+//       return next(err);
+//     }
+//     console.log(spot);
+//     return res.json(spot);
+//   });
+// });
+
+// get random spot
+
+// CODE FROM STACKOVERFLOW
+// https://stackoverflow.com/questions/39277670/how-to-find-random-record-in-mongoose
+// Get the count of all users
+// router.get('/');
+// Spot.count().exec(function (err, count) {
+//   // Get a random entry
+//   var random = Math.floor(Math.random() * count);
+
+//   // Again query all users but only fetch one offset by our random #
+//   Spot.findOne().skip(random).exec(
+//     function (err, result) {
+//       // Tada! random user
+//       console.log(result);
+//     });
+// });
+
+// function to filter the spots
 router.post('/filter', (req, res, next) => {
   console.log('hello from the filter-backend: ' + req.body);
 
@@ -39,6 +69,7 @@ router.post('/filter', (req, res, next) => {
   });
 });
 
+// delete one spot
 router.post('/:spotId', (req, res, next) => {
   Spot.findByIdAndRemove(req.params.spotId, (err, spot) => {
     if (err) {
