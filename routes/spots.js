@@ -76,8 +76,6 @@ router.post('/filter', (req, res, next) => {
           query.$and.push(andCondition);
         } else if (orCondition.$or.length !== 0) {
           query.$and.push(orCondition);
-        } else {
-          query.$and.push(orCondition, andCondition);
         }
       });
     };
