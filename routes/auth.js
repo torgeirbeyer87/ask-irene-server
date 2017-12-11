@@ -112,11 +112,21 @@ router.post('/me/favourites', (req, res, next) => {
     }
   };
 
-  User.findOneAndUpdate(query, update, (err, user) => {
+  User.findOne({_id: userId}, (err, user) => {
+    console.log(user);
     if (err) {
-      return next(err);
+      next(err);
     }
-    return res.json({message: true});
+    if (user.favorites.indexOf(spotId) !== -1) {
+      return res.json({message: 'already in the list'});
+    } else {
+      User.findOneAndUpdate(query, update, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        return res.json({message: true});
+      });
+    }
   });
 });
 
