@@ -14,19 +14,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-// get one spot
-// router.get('/:spotId', (req, res, next) => {
-//   Spot.findById(req.params.spotId, (err, spot) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     console.log(spot);
-//     return res.json(spot);
-//   });
-// });
-
 // get random spot
-
 // CODE FROM STACKOVERFLOW
 // https://stackoverflow.com/questions/39277670/how-to-find-random-record-in-mongoose
 // Get the count of all users
@@ -150,4 +138,15 @@ router.get('/selectors', function (req, res, next) {
   res.json(enums);
 });
 
+// get one spot
+router.get('/:spotId', (req, res, next) => {
+  Spot.findById(req.params.spotId, (err, spot) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json(spot);
+  });
+});
+
 module.exports = router;
+

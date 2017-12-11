@@ -15,7 +15,8 @@ const UserSchema = new Schema({
     required: [true, 'Password is required']
   },
   favorites: Array,
-  wishList: Array
+  wishList: Array,
+  role: Array
 });
 
 UserSchema.methods.asData = function () {

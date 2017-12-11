@@ -62,7 +62,8 @@ router.post('/signup', (req, res, next) => {
     const newUser = User({
       username,
       email,
-      password: hashPass
+      password: hashPass,
+      role: ['User']
     });
 
     newUser.save((err) => {
@@ -99,6 +100,24 @@ router.get('/me', (req, res) => {
     return response.data(req, res, req.user.asData());
   }
   return response.notFound(req, res);
+});
+
+router.post('/me/favourites', (req, res, next) => {
+  const spotId = req.body.spotId;
+  const userId = req.body.user.id;
+  const query = {'_id': userId};
+  const update = {
+    $push: {
+      favorites: spotId
+    }
+  };
+
+  User.findOneAndUpdate(query, update, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json({message: true});
+  });
 });
 
 module.exports = router;
