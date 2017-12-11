@@ -16,6 +16,7 @@ const response = require('./helpers/response');
 const index = require('./routes/index');
 const spots = require('./routes/spots');
 const auth = require('./routes/auth');
+const user = require('./routes/user');
 
 const dotenv = require('dotenv');
 
@@ -67,6 +68,7 @@ app.use(cookieParser());
 app.use('/', index);
 app.use('/spots', spots);
 app.use('/auth', auth);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

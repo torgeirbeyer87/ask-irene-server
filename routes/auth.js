@@ -63,7 +63,9 @@ router.post('/signup', (req, res, next) => {
       username,
       email,
       password: hashPass,
-      role: ['User']
+      role: ['User'],
+      favorites: [],
+      wishList: []
     });
 
     newUser.save((err) => {
@@ -95,39 +97,11 @@ router.post('/logout', (req, res) => {
 // });
 
 router.get('/me', (req, res) => {
-  console.log('Auth Route working');
+  console.log(res);
   if (req.user) {
     return response.data(req, res, req.user.asData());
   }
   return response.notFound(req, res);
-});
-
-router.post('/me/favourites', (req, res, next) => {
-  const spotId = req.body.spotId;
-  const userId = req.body.user.id;
-  const query = {'_id': userId};
-  const update = {
-    $push: {
-      favorites: spotId
-    }
-  };
-
-  User.findOne({_id: userId}, (err, user) => {
-    console.log(user);
-    if (err) {
-      next(err);
-    }
-    if (user.favorites.indexOf(spotId) !== -1) {
-      return res.json({message: 'already in the list'});
-    } else {
-      User.findOneAndUpdate(query, update, (err, user) => {
-        if (err) {
-          return next(err);
-        }
-        return res.json({message: true});
-      });
-    }
-  });
 });
 
 module.exports = router;
