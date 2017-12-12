@@ -3,8 +3,6 @@ var router = express.Router();
 
 const User = require('../models/user').User;
 
-const Spot = require('../models/spot').Spot;
-
 // get list of favorites
 router.post('/me/get/spots', (req, res, next) => {
   const user = req.body.user;
