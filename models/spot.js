@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const spotSchema = new Schema({
-  id: String,
   name: String,
   district: Array,
   categories: Array,

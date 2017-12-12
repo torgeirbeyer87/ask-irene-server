@@ -14,8 +14,14 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Password is required']
   },
-  favorites: Array,
-  wishList: Array,
+  favorites: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Spot'
+  }],
+  wishList: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Spot'
+  }],
   role: Array
 });
 
