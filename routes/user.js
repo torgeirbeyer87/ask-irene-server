@@ -60,6 +60,7 @@ router.post('/me/edit/wishlist', (req, res, next) => {
       next(err);
     }
     if (user.wishList.indexOf(spotId) !== -1) {
+      // splice the element from the array of wishList!!
       return res.json({message: 'already in the list'});
     } else {
       User.findOneAndUpdate(query, update, (err, user) => {
