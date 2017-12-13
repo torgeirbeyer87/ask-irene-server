@@ -97,7 +97,7 @@ router.post('/logout', (req, res) => {
 // });
 
 router.get('/me', (req, res) => {
-  console.log(res);
+  // console.log(res);
   if (req.user) {
     return response.data(req, res, req.user.asData());
   }
