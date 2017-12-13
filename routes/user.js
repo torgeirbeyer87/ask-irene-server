@@ -19,21 +19,30 @@ router.post('/me/edit/favorites', (req, res, next) => {
   const spotId = req.body.spotId;
   const userId = req.body.user.id;
   const query = {'_id': userId};
-  const update = {
+  const add = {
     $push: {
+      favorites: spotId
+    }
+  };
+  const remove = {
+    $pull: {
       favorites: spotId
     }
   };
 
   User.findOne({_id: userId}, (err, user) => {
-    console.log(user);
     if (err) {
       next(err);
     }
     if (user.favorites.indexOf(spotId) !== -1) {
-      return res.json({message: 'already in the list'});
+      User.findOneAndUpdate(query, remove, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        return res.json({message: 'deleted'});
+      });
     } else {
-      User.findOneAndUpdate(query, update, (err, user) => {
+      User.findOneAndUpdate(query, add, (err, user) => {
         if (err) {
           return next(err);
         }
@@ -53,6 +62,11 @@ router.post('/me/edit/wishlist', (req, res, next) => {
       wishList: spotId
     }
   };
+  const remove = {
+    $pull: {
+      wishList: spotId
+    }
+  };
 
   User.findOne({_id: userId}, (err, user) => {
     console.log(user);
@@ -60,8 +74,12 @@ router.post('/me/edit/wishlist', (req, res, next) => {
       next(err);
     }
     if (user.wishList.indexOf(spotId) !== -1) {
-      // splice the element from the array of wishList!!
-      return res.json({message: 'already in the list'});
+      User.findOneAndUpdate(query, remove, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        return res.json({message: 'deleted'});
+      });
     } else {
       User.findOneAndUpdate(query, update, (err, user) => {
         if (err) {
