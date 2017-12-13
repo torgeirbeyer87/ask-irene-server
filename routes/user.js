@@ -4,9 +4,12 @@ var router = express.Router();
 const response = require('../helpers/response');
 const User = require('../models/user').User;
 
-// get list of favorites
-router.post('/me/get/spots', (req, res, next) => {
-  const user = req.body.user;
+// get list of wishList
+router.get('/me/get/spots', (req, res, next) => {
+  if (!req.user) {
+    return response.forbidden(req, res);
+  }
+  const user = req.user;
   User.findById(user.id).populate('favorites').populate('wishList').exec((err, user) => {
     if (err) {
       return next(err);
@@ -17,47 +20,43 @@ router.post('/me/get/spots', (req, res, next) => {
 
 // store a spotId in the database for favorites
 router.post('/me/edit/favorites', (req, res, next) => {
+  if (!req.user) {
+    return response.forbidden(req, res);
+  }
+  const user = req.user;
   const spotId = req.body.spotId;
-  const userId = req.body.user.id;
-  const query = {'_id': userId};
-  const add = {
-    $push: {
-      favorites: spotId
-    }
-  };
-  const remove = {
-    $pull: {
-      favorites: spotId
-    }
-  };
+  const query = {'_id': user.id};
+  let update;
 
-  User.findOne({_id: userId}, (err, user) => {
+  User.findOne({_id: user.id}, (err, user) => {
     if (err) {
       next(err);
     }
-    if (user.favorites.indexOf(spotId) !== -1) {
-      User.findOneAndUpdate(query, remove, {new: true}, (err, user) => {
-        if (err) {
-          return next(err);
+    if (user.favorites.indexOf(spotId) === -1) {
+      update = {
+        $push: {
+          favorites: spotId
         }
-        req.login(user, () => {
-          let data = user.asData();
-          // return res.json({message: 'deleted'});
-          return response.data(req, res, data);
-        });
-      });
+      };
     } else {
-      User.findOneAndUpdate(query, add, {new: true}, (err, user) => {
-        if (err) {
-          return next(err);
+      update = {
+        $pull: {
+          favorites: spotId
         }
-        req.login(user, () => {
-          let data = user.asData();
-          // return res.json({message: 'deleted'});
-          return response.data(req, res, data);
-        });
-      });
+      };
     }
+
+    User.findOneAndUpdate(query, update, {new: true}, (err, user) => {
+      if (err) {
+        return next(err);
+      }
+      req.login(user, (err) => {
+        console.log(err);
+        let data = user.asData();
+        // return res.json({message: 'deleted'});
+        return response.data(req, res, data);
+      });
+    });
   });
 });
 
@@ -76,49 +75,44 @@ router.post('/me/edit/favorites', (req, res, next) => {
 // });
 
 // store a spotId in the database for wishlist
-router.post('/me/edit/wishlist', (req, res, next) => {
+router.post('/me/edit/wishList', (req, res, next) => {
+  if (!req.user) {
+    return response.forbidden(req, res);
+  }
+  const user = req.user;
   const spotId = req.body.spotId;
-  const userId = req.body.user.id;
-  const query = {'_id': userId};
-  const add = {
-    $push: {
-      wishList: spotId
-    }
-  };
-  const remove = {
-    $pull: {
-      wishList: spotId
-    }
-  };
+  const query = {'_id': user.id};
+  let update;
 
-  User.findOne({_id: userId}, (err, user) => {
-    console.log(user);
+  User.findOne({_id: user.id}, (err, user) => {
     if (err) {
       next(err);
     }
-    if (user.wishList.indexOf(spotId) !== -1) {
-      User.findOneAndUpdate(query, remove, {new: true}, (err, user) => {
-        if (err) {
-          return next(err);
+    if (user.wishList.indexOf(spotId) === -1) {
+      update = {
+        $push: {
+          wishList: spotId
         }
-        req.login(user, () => {
-          let data = user.asData();
-          // return res.json({message: 'deleted'});
-          return response.data(req, res, data);
-        });
-      });
+      };
     } else {
-      User.findOneAndUpdate(query, add, {new: true}, (err, user) => {
-        if (err) {
-          return next(err);
+      update = {
+        $pull: {
+          wishList: spotId
         }
-        req.login(user, () => {
-          let data = user.asData();
-          // return res.json({message: 'deleted'});
-          return response.data(req, res, data);
-        });
-      });
+      };
     }
+
+    User.findOneAndUpdate(query, update, {new: true}, (err, user) => {
+      if (err) {
+        return next(err);
+      }
+      req.login(user, (err) => {
+        console.log(err);
+        let data = user.asData();
+        // return res.json({message: 'deleted'});
+        return response.data(req, res, data);
+      });
+    });
   });
 });
 
