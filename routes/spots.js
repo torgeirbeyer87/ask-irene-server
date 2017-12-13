@@ -18,18 +18,25 @@ router.get('/', function (req, res, next) {
 // CODE FROM STACKOVERFLOW
 // https://stackoverflow.com/questions/39277670/how-to-find-random-record-in-mongoose
 // Get the count of all users
-// router.get('/');
-// Spot.count().exec(function (err, count) {
-//   // Get a random entry
-//   var random = Math.floor(Math.random() * count);
+router.get('/random', (req, res, next) => {
+  Spot.count({}).exec((err, count) => {
+    if (err) {
+      return next(err);
+    }
+    // Get a random entry
+    var random = Math.floor(Math.random() * count);
 
-//   // Again query all users but only fetch one offset by our random #
-//   Spot.findOne().skip(random).exec(
-//     function (err, result) {
-//       // Tada! random user
-//       console.log(result);
-//     });
-// });
+    // Again query all users but only fetch one offset by our random #
+    Spot.findOne().skip(random).exec(
+      function (err, result) {
+        if (err) {
+          return next(err);
+        }
+        // Tada! random user
+        res.json(result);
+      });
+  });
+});
 
 // function to filter the spots
 router.post('/filter', (req, res, next) => {
@@ -149,4 +156,3 @@ router.get('/:spotId', (req, res, next) => {
 });
 
 module.exports = router;
-
