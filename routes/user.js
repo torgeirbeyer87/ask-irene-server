@@ -60,20 +60,6 @@ router.post('/me/edit/favorites', (req, res, next) => {
   });
 });
 
-// User.findOneAndUpdate({ _id: req.user._id }, { $set: newInfo }, {new: true}, (err, user) => {
-//   if (err) {
-//     return next(err);
-//   }
-//   if (!user) {
-//     return response.notFound(req, res);
-//   }
-//   req.login(user, (err) => {
-//     let data = user.asData();
-//     return response.data(req, res, data);
-//   });
-// });
-// });
-
 // store a spotId in the database for wishlist
 router.post('/me/edit/wishList', (req, res, next) => {
   if (!req.user) {
